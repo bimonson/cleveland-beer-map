@@ -25,6 +25,7 @@ class App extends Component {
 
       this.google = google;
       this.markers = [];
+      this.infoWindow = new google.maps.InfoWindow();
 
       this.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
@@ -41,6 +42,17 @@ class App extends Component {
           name: venue.name,
           animation: google.maps.Animation.DROP,
         });
+
+        marker.addListener('click', () => {
+          this.infoWindow.setContent(marker.name);
+          this.map.setCenter(marker.position);
+          this.infoWindow.open(this.map, marker);
+        });
+
+        // google.maps.event.addListener(marker, 'click', () => {
+
+        // })
+
         this.markers.push(marker);
       });
 
