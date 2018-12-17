@@ -44,8 +44,7 @@ export function load_venues() {
   }
 
   return fetch(`${endPoint}${auth()}&${urlParams()}`)
-    .then(console.log(`${endPoint}${auth()}&${urlParams()}`))
-    .then(resp => resp.json)
+    .then(response => response.json())
     .catch(error => {
       alert(`FourSquare data could not be retrieved. ${error}`)
     })

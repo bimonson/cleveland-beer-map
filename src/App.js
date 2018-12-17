@@ -18,18 +18,33 @@ class App extends Component {
       venuesPromise
     ])
     .then(values => {
-      console.log(values);
-    })
-    // .then(values => {
-    //   let google = values[0];
+      let google = values[0];
+      let venues = values[1].response.venues;
+      let geometry = values[1].response.geocode.feature.geometry;
+      // console.log(values);
 
-    //   this.google = google;
-    //   this.map = new google.maps.Map(document.getElementById('map'), {
-    //     zoom: 9,
-    //     scrollwheel: true,
-    //     center: { lat: -31, lng: 151 }
-    //   })
-    // })
+      this.google = google;
+      this.markers = [];
+
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        scrollwheel: true,
+        center: { lat: geometry.center.lat, lng: geometry.center.lng }
+      })
+
+      venues.forEach(venue => {
+        let marker = new google.maps.Marker({
+          position: { lat: venue.location.lat, lng: venue.location.lng },
+          map: this.map,
+          venue: venue,
+          id: venue.id,
+          name: venue.name,
+          animation: google.maps.Animation.DROP,
+        });
+      });
+
+
+    })
   }
 
   render() {
