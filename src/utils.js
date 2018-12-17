@@ -17,3 +17,36 @@ export function load_google_maps() {
     document.body.appendChild(script);
   });
 }
+
+export function load_venues() {
+  const endPoint = 'https://api.foursquare.com/v2/venues/search?';
+
+   function auth() {
+    const keys = {
+      client_id: 'U52AQWDBBAP4AJQY1XVYYK3DK1OJWPAOF1ORDWWCKNPNOJR2',
+      client_secret: 'WTGQCC1PT3R3HPKHBFU4VH5TAOYAJQKIVO0SCDGO20XNIFDD',
+      v: '20180323'
+    };
+    return Object.keys(keys)
+      .map(key => `${key}=${keys[key]}`)
+      .join('&');
+  }
+
+  function urlParams() {
+    const parameters = {
+      limit: '50',
+      near: 'Cleveland',
+      query: 'brewery'
+    }
+    return Object.keys(parameters)
+    .map(parameter => `${parameter}=${parameters[parameter]}`)
+    .join('&');
+  }
+
+  return fetch(`${endPoint}${auth()}&${urlParams()}`)
+    .then(console.log(`${endPoint}${auth()}&${urlParams()}`))
+    .then(resp => resp.json)
+    .catch(error => {
+      alert(`FourSquare data could not be retrieved. ${error}`)
+    })
+}
