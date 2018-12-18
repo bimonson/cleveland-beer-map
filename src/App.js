@@ -10,7 +10,7 @@ class App extends Component {
   componentDidMount() {
     let googleMapsPromise = load_google_maps();
     let venuesPromise = SquareAPI.loadVenues({
-      limit: '50',
+      limit: '10',
       near: 'Cleveland',
       query: 'brewery'
     });
@@ -46,16 +46,21 @@ class App extends Component {
           animation: google.maps.Animation.DROP
         });
 
-
-        let infoWindowContent = `<div>
-          <h3>${venue.name}</h3>
-        </div>`
-
         marker.addListener('click', () => {
-          SquareAPI.getVenueDetails(venue.id).then(results => {
+          let venueDetails = SquareAPI.getVenueDetails(venue.id).then(results => {
             console.log(results);
-            let venueDetails = results.response.venue;
-          })
+            return results.response.venue;
+          });
+          let infoWindowContent = `<div>
+              <h3>${venue.name}</h3>
+              ${venueDetails && venueDetails.bestPhoto ? (
+                `<img
+                  alt="${venueDetails.name} photo"
+                  src="${venueDetails.bestPhoto.prefix}200x200${venueDetails.bestPhoto.suffix}"
+                />`
+              ) : ''}
+            </div>`
+
           this.infoWindow.setContent(infoWindowContent);
           this.map.setCenter(marker.position);
           this.infoWindow.open(this.map, marker);
