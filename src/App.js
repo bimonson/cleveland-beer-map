@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {
-  load_google_maps,
-  load_venues
-} from './utils.js';
+import { load_google_maps } from './utils.js';
+import SquareAPI from './utils.js';
 
 import MapDiv from './components/MapDiv.js';
 
 class App extends Component {
   componentDidMount() {
     let googleMapsPromise = load_google_maps();
-    let venuesPromise = load_venues();
+    let venuesPromise = SquareAPI.loadVenues({
+      limit: '50',
+      near: 'Cleveland',
+      query: 'brewery'
+    });
 
     Promise.all([
       googleMapsPromise,
@@ -21,6 +23,7 @@ class App extends Component {
       let google = values[0];
       let venues = values[1].response.venues;
       let geometry = values[1].response.geocode.feature.geometry;
+
       // console.log(values);
 
       this.google = google;
@@ -40,11 +43,20 @@ class App extends Component {
           venue: venue,
           id: venue.id,
           name: venue.name,
-          animation: google.maps.Animation.DROP,
+          animation: google.maps.Animation.DROP
         });
 
+
+        let infoWindowContent = `<div>
+          <h3>${venue.name}</h3>
+        </div>`
+
         marker.addListener('click', () => {
-          this.infoWindow.setContent(marker.name);
+          SquareAPI.getVenueDetails(venue.id).then(results => {
+            console.log(results);
+            let venueDetails = results.response.venue;
+          })
+          this.infoWindow.setContent(infoWindowContent);
           this.map.setCenter(marker.position);
           this.infoWindow.open(this.map, marker);
         });

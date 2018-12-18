@@ -18,10 +18,13 @@ export function load_google_maps() {
   });
 }
 
-export function load_venues() {
-  const endPoint = 'https://api.foursquare.com/v2/venues/search?';
+// Access FourSquare API. Derrived from Forrest Walker's youtube walkthrough
+class Helper {
+  static startURL() {
+    return 'https://api.foursquare.com/v2/'
+  }
 
-   function auth() {
+  static auth() {
     const keys = {
       client_id: 'U52AQWDBBAP4AJQY1XVYYK3DK1OJWPAOF1ORDWWCKNPNOJR2',
       client_secret: 'WTGQCC1PT3R3HPKHBFU4VH5TAOYAJQKIVO0SCDGO20XNIFDD',
@@ -32,20 +35,35 @@ export function load_venues() {
       .join('&');
   }
 
-  function urlParams() {
-    const parameters = {
-      limit: '50',
-      near: 'Cleveland',
-      query: 'brewery'
+  static urlBuilder(urlParams) {
+    if(!urlParams) {
+      return '';
     }
-    return Object.keys(parameters)
-    .map(parameter => `${parameter}=${parameters[parameter]}`)
+    return Object.keys(urlParams)
+    .map(key => `${key}=${urlParams[key]}`)
     .join('&');
   }
 
-  return fetch(`${endPoint}${auth()}&${urlParams()}`)
+  static simpleFetch(endPoint, urlParams) {
+    return fetch(`${Helper.startURL()}${endPoint}?${Helper.auth()}&${Helper.urlBuilder(urlParams)}`)
     .then(response => response.json())
     .catch(error => {
       alert(`FourSquare data could not be retrieved. ${error}`)
     })
+  }
 }
+
+export default class SquareAPI {
+  static loadVenues(urlParams) {
+    return Helper.simpleFetch('/venues/search', urlParams);
+  }
+
+  static getVenueDetails(VENUE_ID) {
+    return Helper.simpleFetch(`/venues/${VENUE_ID}`);
+  }
+
+  static getVenuePhotos(VENUE_ID) {
+    return Helper.simpleFetch(`/venues/${VENUE_ID}/photos`);
+  }
+}
+
