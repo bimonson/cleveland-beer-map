@@ -47,21 +47,25 @@ class App extends Component {
         });
 
         marker.addListener('click', () => {
-          let venueDetails = SquareAPI.getVenueDetails(venue.id).then(results => {
-            console.log(results);
-            return results.response.venue;
-          });
-          let infoWindowContent = `<div>
-              <h3>${venue.name}</h3>
-              ${venueDetails && venueDetails.bestPhoto ? (
-                `<img
-                  alt="${venueDetails.name} photo"
-                  src="${venueDetails.bestPhoto.prefix}200x200${venueDetails.bestPhoto.suffix}"
-                />`
-              ) : ''}
-            </div>`
+          let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
 
-          this.infoWindow.setContent(infoWindowContent);
+          Promise.resolve(venueDetailsPromise)
+          .then(values => {
+            let venueDetails = values.response.venue;
+
+            let infoWindowContent = `<div>
+                <h3>${venue.name}</h3>
+                ${venueDetails && venueDetails.bestPhoto ? (
+                  `<img
+                    alt="${venueDetails.name} photo"
+                    src="${venueDetails.bestPhoto.prefix}100x100${venueDetails.bestPhoto.suffix}"
+                  />`
+                ) : ''}
+              </div>`
+
+            this.infoWindow.setContent(infoWindowContent);
+        });
+
           this.map.setCenter(marker.position);
           this.infoWindow.open(this.map, marker);
         });
