@@ -64,20 +64,22 @@ class App extends Component {
               </div>`
 
             this.infoWindow.setContent(infoWindowContent);
-        });
+          }).catch(error => {
+            console.log(error);
+            alert(`Error loading info window data. ${error}`);
+          });
 
           this.map.setCenter(marker.position);
           this.infoWindow.open(this.map, marker);
         });
 
-        // google.maps.event.addListener(marker, 'click', () => {
-
-        // })
-
         this.markers.push(marker);
       });
 
 
+    }).catch(error => {
+      console.log(error);
+      alert(`Error loading page. ${error}`);
     })
   }
 
