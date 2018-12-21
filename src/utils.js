@@ -44,12 +44,53 @@ class Helper {
     .join('&');
   }
 
+  // The following code comes from Using Fetch by Zell Liew
+  // https://css-tricks.com/using-fetch/#article-header-id-5
+  static handleResponse (response) {
+    let contentType = response.headers.get('content-type')
+    if (contentType.includes('application/json')) {
+      return Helper.handleJSONResponse(response)
+    } else if (contentType.includes('text/html')) {
+      return Helper.handleTextResponse(response)
+    } else {
+      // Other response types as necessary. I haven't found a need for them yet though.
+      throw new Error(`Sorry, content-type ${contentType} not supported`)
+    }
+  }
+
+  static handleJSONResponse (response) {
+    return response.json()
+      .then(json => {
+        if (response.ok) {
+          return json
+        } else {
+          return Promise.reject(Object.assign({}, json, {
+            status: response.status,
+            statusText: response.statusText
+          }))
+        }
+      })
+  }
+
+  static handleTextResponse (response) {
+    return response.text()
+      .then(text => {
+        if (response.ok) {
+          return text
+        } else {
+          return Promise.reject({
+            status: response.status,
+            statusText: response.statusText,
+            err: text
+          })
+        }
+      })
+  }
+
   static simpleFetch(endPoint, urlParams) {
     return fetch(`${Helper.startURL()}${endPoint}?${Helper.auth()}&${Helper.urlBuilder(urlParams)}`)
-    .then(response => response.json())
-    .catch(error => {
-      alert(`FourSquare data could not be retrieved. ${error}`)
-    })
+    .then(Helper.handleResponse)
+    .catch(error => console.log(error))
   }
 }
 

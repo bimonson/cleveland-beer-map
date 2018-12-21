@@ -51,7 +51,8 @@ class App extends Component {
             marker.setAnimation(null);
           } else {
             marker.setAnimation(google.maps.Animation.BOUNCE);
-          } setTimeout(() => { marker.setAnimation(null) }, 1500);
+          }
+          setTimeout(() => { marker.setAnimation(null) }, 1500);
 
           let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
 
@@ -60,7 +61,7 @@ class App extends Component {
             let venueDetails = values.response.venue;
 
             let infoWindowContent = `<div>
-                <h3>${venue.name}</h3>
+                <h3>${venueDetails && venueDetails.name}</h3>
                 ${venueDetails && venueDetails.bestPhoto ? (
                   `<img
                     alt="${venueDetails.name} photo"
@@ -70,10 +71,7 @@ class App extends Component {
               </div>`
 
             this.infoWindow.setContent(infoWindowContent);
-          }).catch(error => {
-            console.log(error);
-            alert(`Error loading info window data. ${error}`);
-          });
+          }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
 
           this.map.setCenter(marker.position);
           this.infoWindow.open(this.map, marker);
