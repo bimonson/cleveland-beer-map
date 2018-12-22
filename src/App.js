@@ -63,12 +63,12 @@ class App extends Component {
           .then(values => {
             let venueDetails = values.response.venue;
 
-            let infoWindowContent = `<div>
+            let infoWindowContent = `<div id="info-window-content">
                 <h3>${venueDetails && venueDetails.name}</h3>
                 ${venueDetails && venueDetails.bestPhoto ? (
                   `<img
                     alt="${venueDetails.name} photo"
-                    src="${venueDetails.bestPhoto.prefix}100x100${venueDetails.bestPhoto.suffix}"
+                    src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
                   />`
                 ) : ''}
               </div>`

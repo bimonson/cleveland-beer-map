@@ -35,3 +35,17 @@
   width: 100vw;
   height: 100vh;
 }
+
+#info-window-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 18.75em;
+  text-align: center;
+}
+
+img {
+  width: 100%;
+}
