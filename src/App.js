@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// APIs
 import { load_google_maps } from './utils.js';
 import SquareAPI from './utils.js';
 
+// Components
 import MapDiv from './components/MapDiv.js';
+import ResponsiveDrawer from './components/ResponsiveDrawer';
 
 class App extends Component {
   componentDidMount() {
@@ -90,6 +93,7 @@ class App extends Component {
   render() {
     return (
       <div id="app-container">
+        <ResponsiveDrawer />
         <MapDiv />
       </div>
     );
