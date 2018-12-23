@@ -13,6 +13,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -47,12 +49,23 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
   title: {
-    fontSize: "2em",
+    fontSize: "1.25em",
+    fontWeight: 500,
   }
 });
 
@@ -70,7 +83,18 @@ class ResponsiveDrawer extends React.Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+          <div className={classes.drawerHeader}>
+            <IconButton
+              aria-label="Close drawer"
+              onClick={this.handleDrawerToggle}
+            >
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+        </div>
+
+        <Divider />
         <FilterInput />
         <Divider />
         <List>
