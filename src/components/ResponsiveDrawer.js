@@ -95,7 +95,10 @@ class ResponsiveDrawer extends React.Component {
         </div>
 
         <Divider />
-        <FilterInput />
+        <FilterInput
+          query={this.state.query}
+          filterVenues={this.props.filterVenues}
+        />
         <Divider />
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (

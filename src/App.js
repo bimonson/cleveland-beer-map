@@ -10,6 +10,13 @@ import MapDiv from './components/MapDiv.js';
 import ResponsiveDrawer from './components/ResponsiveDrawer';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '',
+    }
+  }
+
   componentDidMount() {
     let googleMapsPromise = load_google_maps();
     let venuesPromise = SquareAPI.loadVenues({
@@ -77,6 +84,7 @@ class App extends Component {
           }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
 
           this.map.setCenter(marker.position);
+          this.map.panBy(0, -48);
           this.infoWindow.open(this.map, marker);
         });
 
@@ -90,10 +98,22 @@ class App extends Component {
     })
   }
 
+  filterVenues = (query) => {
+    this.markers.forEach(marker => {
+      marker.name.toLowerCase().includes((query).toLowerCase()) === true ?
+      marker.setVisible(true) :
+      marker.setVisible(false)
+    });
+  }
+
   render() {
     return (
       <div id="app-container">
-        <ResponsiveDrawer />
+        <ResponsiveDrawer
+          query={this.state.query}
+          filterVenues={this.filterVenues}
+          filtered={this.state.filtered}
+        />
         <MapDiv />
       </div>
     );

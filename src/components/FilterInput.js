@@ -33,6 +33,8 @@ class FilterInput extends React.Component {
           className={classNames(classes.textField, classes.dense)}
           margin="dense"
           variant="outlined"
+          value={this.props.query}
+          onChange={(e) => { this.props.filterVenues(e.target.value) }}
         />
 
       </form>

@@ -11,7 +11,7 @@ img {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   max-width: 18.75em;
   text-align: left;
