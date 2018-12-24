@@ -98,7 +98,7 @@ class ResponsiveDrawer extends React.Component {
         />
         <Divider />
         <List>
-          {this.props.filtered && this.props.filtered.length > 0 && this.props.filtered
+          {this.props.filtered && this.props.filtered.length > 0 ? this.props.filtered
           .map((venue, index) => (
             <ListItem
               button key={index}
@@ -106,7 +106,11 @@ class ResponsiveDrawer extends React.Component {
             >
               <ListItemText primary={venue.name} />
             </ListItem>
-          ))}
+          )) :
+          <ListItem>
+            <ListItemText primary='FourSquare data could not be retrieved.' />
+          </ListItem>
+          }
         </List>
       </div>
     );
