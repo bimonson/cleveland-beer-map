@@ -58,11 +58,7 @@ class App extends Component {
         });
 
         marker.addListener('click', () => {
-          if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-          } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
+          marker.setAnimation(google.maps.Animation.BOUNCE);
           setTimeout(() => { marker.setAnimation(null) }, 1500);
 
           let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
@@ -106,6 +102,9 @@ class App extends Component {
 
   liClick = (venue) => {
     let marker = this.markers.filter(m => m.id === venue.id)[0];
+
+    marker.setAnimation(this.google.maps.Animation.BOUNCE);
+    setTimeout(() => { marker.setAnimation(null) }, 1500);
 
     let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
 
