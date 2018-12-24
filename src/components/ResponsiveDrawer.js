@@ -67,13 +67,13 @@ const styles = theme => ({
 });
 
 class ResponsiveDrawer extends React.Component {
-  state = {
-    mobileOpen: false,
-  };
+  // state = {
+  //   mobileOpen: false,
+  // };
 
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
+  // handleDrawerToggle = () => {
+  //   this.setState(state => ({ mobileOpen: !state.mobileOpen }));
+  // };
 
   render() {
     const { classes, theme } = this.props;
@@ -84,7 +84,7 @@ class ResponsiveDrawer extends React.Component {
           <div className={classes.drawerHeader}>
             <IconButton
               aria-label="Close drawer"
-              onClick={this.handleDrawerToggle}
+              onClick={this.props.handleDrawerToggle}
             >
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
@@ -119,7 +119,7 @@ class ResponsiveDrawer extends React.Component {
             <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.handleDrawerToggle}
+              onClick={this.props.handleDrawerToggle}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -136,8 +136,8 @@ class ResponsiveDrawer extends React.Component {
               container={this.props.container}
               variant="temporary"
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={this.state.mobileOpen}
-              onClose={this.handleDrawerToggle}
+              open={this.props.mobileOpen}
+              onClose={this.props.handleDrawerToggle}
               classes={{
                 paper: classes.drawerPaper,
               }}

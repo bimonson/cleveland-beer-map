@@ -14,6 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       query: '',
+      mobileOpen: false,
     }
   }
 
@@ -99,6 +100,10 @@ class App extends Component {
     })
   }
 
+  handleDrawerToggle = () => {
+    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
+  };
+
   liClick = (venue) => {
     let marker = this.markers.filter(m => m.id === venue.id)[0];
 
@@ -121,9 +126,14 @@ class App extends Component {
       this.infoWindow.setContent(infoWindowContent);
     }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
 
+    if (window.matchMedia('(max-width: 599px)').matches) {
+      this.handleDrawerToggle();
+    }
+
     this.map.setCenter(marker.position);
     this.map.panBy(0, -48);
     this.infoWindow.open(this.map, marker);
+
   }
 
   filterVenues = (query) => {
@@ -145,6 +155,8 @@ class App extends Component {
           filterVenues={this.filterVenues}
           filtered={this.state.filtered}
           liClick={this.liClick}
+          handleDrawerToggle={this.handleDrawerToggle}
+          mobileOpen={this.state.mobileOpen}
         />
         <MapDiv />
       </div>
