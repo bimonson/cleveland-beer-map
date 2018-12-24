@@ -99,6 +99,33 @@ class App extends Component {
     })
   }
 
+  liClick = (venue) => {
+    let marker = this.markers.filter(m => m.id === venue.id)[0];
+
+    let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
+
+    Promise.resolve(venueDetailsPromise)
+    .then(values => {
+      let venueDetails = values.response.venue;
+
+      let infoWindowContent = `<div id="info-window-content">
+          <h3>${venueDetails && venueDetails.name}</h3>
+          ${venueDetails && venueDetails.bestPhoto ? (
+            `<img
+              alt="${venueDetails.name} photo"
+              src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
+            />`
+          ) : ''}
+        </div>`
+
+      this.infoWindow.setContent(infoWindowContent);
+    }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
+
+    this.map.setCenter(marker.position);
+    this.map.panBy(0, -48);
+    this.infoWindow.open(this.map, marker);
+  }
+
   filterVenues = (query) => {
     let f = this.venues.filter(venue => venue.name.toLowerCase().includes((query).toLowerCase()));
     this.markers.forEach(marker => {
@@ -117,6 +144,7 @@ class App extends Component {
           query={this.state.query}
           filterVenues={this.filterVenues}
           filtered={this.state.filtered}
+          liClick={this.liClick}
         />
         <MapDiv />
       </div>

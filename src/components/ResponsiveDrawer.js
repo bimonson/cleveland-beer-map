@@ -100,7 +100,10 @@ class ResponsiveDrawer extends React.Component {
         <List>
           {this.props.filtered && this.props.filtered.length > 0 && this.props.filtered
           .map((venue, index) => (
-            <ListItem button key={index}>
+            <ListItem
+              button key={index}
+              onClick={() => { this.props.liClick(venue) }}
+            >
               <ListItemText primary={venue.name} />
             </ListItem>
           ))}
