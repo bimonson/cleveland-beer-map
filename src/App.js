@@ -46,7 +46,11 @@ class App extends Component {
         zoom: 10,
         scrollwheel: true,
         center: { lat: geometry.center.lat, lng: geometry.center.lng }
-      })
+      });
+
+      google.maps.event.addListener(this.map, 'click', () => {
+        this.infoWindow.close();
+      });
 
       this.venues.forEach(venue => {
         let marker = new google.maps.Marker({
@@ -63,7 +67,6 @@ class App extends Component {
         marker.addListener('click', () => {
           this.markerClick(venue);
         });
-
       });
 
       this.setState({ filtered: this.venues });
