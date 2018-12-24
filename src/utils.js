@@ -90,7 +90,6 @@ class Helper {
   static simpleFetch(endPoint, urlParams) {
     return fetch(`${Helper.startURL()}${endPoint}?${Helper.auth()}&${Helper.urlBuilder(urlParams)}`)
     .then(Helper.handleResponse)
-    .catch(error => console.log(error))
   }
 }
 

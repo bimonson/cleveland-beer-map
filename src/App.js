@@ -58,36 +58,12 @@ class App extends Component {
           animation: google.maps.Animation.DROP
         });
 
+        this.markers.push(marker);
+
         marker.addListener('click', () => {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(() => { marker.setAnimation(null) }, 1500);
-
-          let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
-
-          Promise.resolve(venueDetailsPromise)
-          .then(values => {
-            let venueDetails = values.response.venue;
-
-            let infoWindowContent = `<div id="info-window-content">
-                <h3>${venueDetails && venueDetails.name}</h3>
-                ${venueDetails && venueDetails.bestPhoto ? (
-                  `<img
-                    alt="${venueDetails.name} photo"
-                    src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
-                  />`
-                ) : ''}
-                <img id="powered-by-foursquare" src=${PoweredByFourSquare} alt="Powered By FourSquare" />
-              </div>`
-
-            this.infoWindow.setContent(infoWindowContent);
-          }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
-
-          this.map.setCenter(marker.position);
-          this.map.panBy(0, -64);
-          this.infoWindow.open(this.map, marker);
+          this.markerClick(venue);
         });
 
-        this.markers.push(marker);
       });
 
       this.setState({ filtered: this.venues });
@@ -102,23 +78,24 @@ class App extends Component {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
-  liClick = (venue) => {
+  markerClick = (venue) => {
     let marker = this.markers.filter(m => m.id === venue.id)[0];
 
     marker.setAnimation(this.google.maps.Animation.BOUNCE);
     setTimeout(() => { marker.setAnimation(null) }, 1500);
 
-    let venueDetailsPromise = SquareAPI.getVenueDetails(venue.id);
-
-    Promise.resolve(venueDetailsPromise)
+    SquareAPI.getVenueDetails(venue.id)
     .then(values => {
       let venueDetails = values.response.venue;
 
       let infoWindowContent = `<div id="info-window-content">
-          <h3>${venueDetails && venueDetails.name}</h3>
-          ${venueDetails && venueDetails.bestPhoto ? (
+          ${venueDetails && venueDetails.name ? (
+            `<h3>${venueDetails && venueDetails.name}</h3>`
+          ) : `<h3>${venue.name}</h3>`}
+
+          ${venueDetails && venue && venueDetails.bestPhoto ? (
             `<img
-              alt="${venueDetails.name} photo"
+              alt="${venue.name} photo"
               src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
             />`
           ) : ''}
@@ -126,16 +103,22 @@ class App extends Component {
         </div>`
 
       this.infoWindow.setContent(infoWindowContent);
-    }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
-
-    if (window.matchMedia('(max-width: 599px)').matches) {
-      this.handleDrawerToggle();
-    }
+    }).catch(error => {
+      console.log(error);
+      this.infoWindow.setContent(`<h3>${venue.name}</h3>`);
+    });
 
     this.map.setCenter(marker.position);
     this.map.panBy(0, -64);
     this.infoWindow.open(this.map, marker);
+  }
 
+  liClick = (venue) => {
+    this.markerClick(venue);
+
+    if (window.matchMedia('(max-width: 599px)').matches) {
+      this.handleDrawerToggle();
+    }
   }
 
   filterVenues = (query) => {
