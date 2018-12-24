@@ -9,6 +9,9 @@ import SquareAPI from './utils.js';
 import MapDiv from './components/MapDiv.js';
 import ResponsiveDrawer from './components/ResponsiveDrawer';
 
+// Powered By FourSquare attribution image
+import PoweredByFourSquare from './powered-by-foursquare-grey.svg';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +37,6 @@ class App extends Component {
       let google = values[0];
       this.venues = values[1].response.venues;
       let geometry = values[1].response.geocode.feature.geometry;
-
-      // console.log(values);
 
       this.google = google;
       this.markers = [];
@@ -75,13 +76,14 @@ class App extends Component {
                     src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
                   />`
                 ) : ''}
+                <img id="powered-by-foursquare" src=${PoweredByFourSquare} alt="Powered By FourSquare" />
               </div>`
 
             this.infoWindow.setContent(infoWindowContent);
           }).catch(this.infoWindow.setContent(`<h3>${venue.name}</h3>`));
 
           this.map.setCenter(marker.position);
-          this.map.panBy(0, -48);
+          this.map.panBy(0, -64);
           this.infoWindow.open(this.map, marker);
         });
 
@@ -120,6 +122,7 @@ class App extends Component {
               src="${venueDetails.bestPhoto.prefix}300x169${venueDetails.bestPhoto.suffix}"
             />`
           ) : ''}
+          <img id="powered-by-foursquare" src=${PoweredByFourSquare} alt="Powered By FourSquare" />
         </div>`
 
       this.infoWindow.setContent(infoWindowContent);
@@ -130,7 +133,7 @@ class App extends Component {
     }
 
     this.map.setCenter(marker.position);
-    this.map.panBy(0, -48);
+    this.map.panBy(0, -64);
     this.infoWindow.open(this.map, marker);
 
   }

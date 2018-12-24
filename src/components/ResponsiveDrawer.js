@@ -18,6 +18,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 import FilterInput from './FilterInput';
 
+// Powered By FourSquare attribution image
+import PoweredByFourSquare from '../powered-by-foursquare-grey.svg';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -52,6 +55,8 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+  },
+  closeChevron: {
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
@@ -82,7 +87,8 @@ class ResponsiveDrawer extends React.Component {
       <div>
         <div className={classes.toolbar}>
           <div className={classes.drawerHeader}>
-            <IconButton
+            <img id="powered-by-foursquare" src={PoweredByFourSquare} alt="Powered By FourSquare" />
+            <IconButton className={classes.closeChevron}
               aria-label="Close drawer"
               onClick={this.props.handleDrawerToggle}
             >

@@ -17,6 +17,11 @@ img {
   text-align: left;
 }
 
+#powered-by-foursquare {
+  margin: 1em;
+  width: 60%;
+}
+
 @media screen and (min-width: 600px) {
   #map {
     width: calc(100% - 240px);
