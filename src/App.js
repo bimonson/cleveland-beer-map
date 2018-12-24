@@ -104,6 +104,8 @@ class App extends Component {
       marker.setVisible(true) :
       marker.setVisible(false)
     });
+
+    this.setState({ query });
   }
 
   render() {

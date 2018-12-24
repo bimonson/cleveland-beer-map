@@ -96,7 +96,7 @@ class ResponsiveDrawer extends React.Component {
 
         <Divider />
         <FilterInput
-          query={this.state.query}
+          query={this.props.query}
           filterVenues={this.props.filterVenues}
         />
         <Divider />
