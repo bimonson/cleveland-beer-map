@@ -100,13 +100,14 @@ class App extends Component {
   }
 
   filterVenues = (query) => {
+    let f = this.venues.filter(venue => venue.name.toLowerCase().includes((query).toLowerCase()));
     this.markers.forEach(marker => {
       marker.name.toLowerCase().includes((query).toLowerCase()) === true ?
       marker.setVisible(true) :
       marker.setVisible(false)
     });
 
-    this.setState({ query });
+    this.setState({ filtered: f, query });
   }
 
   render() {
