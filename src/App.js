@@ -31,7 +31,7 @@ class App extends Component {
     ])
     .then(values => {
       let google = values[0];
-      let venues = values[1].response.venues;
+      this.venues = values[1].response.venues;
       let geometry = values[1].response.geocode.feature.geometry;
 
       // console.log(values);
@@ -46,7 +46,7 @@ class App extends Component {
         center: { lat: geometry.center.lat, lng: geometry.center.lng }
       })
 
-      venues.forEach(venue => {
+      this.venues.forEach(venue => {
         let marker = new google.maps.Marker({
           position: { lat: venue.location.lat, lng: venue.location.lng },
           map: this.map,
@@ -91,6 +91,7 @@ class App extends Component {
         this.markers.push(marker);
       });
 
+      this.setState({ filtered: this.venues });
 
     }).catch(error => {
       console.log(error);
