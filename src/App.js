@@ -130,6 +130,8 @@ class App extends Component {
     });
 
     this.setState({ filtered: f, query });
+
+    this.infoWindow.close();
   }
 
   render() {
