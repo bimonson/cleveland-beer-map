@@ -22,6 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // Load Google Maps and FourSquare venues
     let googleMapsPromise = load_google_maps();
     let venuesPromise = SquareAPI.loadVenues({
       limit: '10',
@@ -52,6 +53,7 @@ class App extends Component {
         this.infoWindow.close();
       });
 
+      // Create a marker for each venue
       this.venues.forEach(venue => {
         let marker = new google.maps.Marker({
           position: { lat: venue.location.lat, lng: venue.location.lng },
@@ -77,6 +79,7 @@ class App extends Component {
     })
   }
 
+  // Toggles responsive drawer open and closed on mobile
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
@@ -87,6 +90,7 @@ class App extends Component {
     marker.setAnimation(this.google.maps.Animation.BOUNCE);
     setTimeout(() => { marker.setAnimation(null) }, 1500);
 
+    // Request venue details from FourSquare and fill infow window content
     SquareAPI.getVenueDetails(venue.id)
     .then(values => {
       let venueDetails = values.response.venue;
@@ -113,11 +117,14 @@ class App extends Component {
       );
     });
 
+    // Set map center and compensate vertically for info window with panning
+    // Open info window
     this.map.setCenter(marker.position);
     this.map.panBy(0, -64);
     this.infoWindow.open(this.map, marker);
   }
 
+  // Call marker click function and close responsive drawer on mobile
   liClick = (venue) => {
     this.markerClick(venue);
 
@@ -126,6 +133,7 @@ class App extends Component {
     }
   }
 
+  // Filter venues list items and markers based on query
   filterVenues = (query) => {
     let f = this.venues.filter(venue => venue.name.toLowerCase().includes((query).toLowerCase()));
     this.markers.forEach(marker => {
