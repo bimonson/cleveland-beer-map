@@ -71,17 +71,9 @@ const styles = theme => ({
   }
 });
 
-class ResponsiveDrawer extends React.Component {
-  // state = {
-  //   mobileOpen: false,
-  // };
+const ResponsiveDrawer = (props) => {
 
-  // handleDrawerToggle = () => {
-  //   this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  // };
-
-  render() {
-    const { classes, theme } = this.props;
+    const { classes, theme } = props;
 
     const drawer = (
       <div>
@@ -90,7 +82,7 @@ class ResponsiveDrawer extends React.Component {
             <img id="powered-by-foursquare" src={PoweredByFourSquare} alt="Powered By FourSquare" />
             <IconButton className={classes.closeChevron}
               aria-label="Close drawer"
-              onClick={this.props.handleDrawerToggle}
+              onClick={props.handleDrawerToggle}
             >
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
@@ -99,22 +91,22 @@ class ResponsiveDrawer extends React.Component {
 
         <Divider />
         <FilterInput
-          query={this.props.query}
-          filterVenues={this.props.filterVenues}
+          query={props.query}
+          filterVenues={props.filterVenues}
         />
         <Divider />
         <List>
-          {this.props.filtered && this.props.filtered.length > 0 ? this.props.filtered
+          {props.filtered && props.filtered.length > 0 ? props.filtered
           .map((venue, index) => (
             <ListItem
               button key={index}
-              onClick={() => { this.props.liClick(venue) }}
+              onClick={() => { props.liClick(venue) }}
             >
               <ListItemText primary={venue.name} />
             </ListItem>
           )) :
           <ListItem>
-            <ListItemText primary='FourSquare data could not be retrieved.' />
+            <ListItemText primary='No matches. Please enter another query.' />
           </ListItem>
           }
         </List>
@@ -129,7 +121,7 @@ class ResponsiveDrawer extends React.Component {
             <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.props.handleDrawerToggle}
+              onClick={props.handleDrawerToggle}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -143,11 +135,11 @@ class ResponsiveDrawer extends React.Component {
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Hidden smUp implementation="css">
             <Drawer
-              container={this.props.container}
+              container={props.container}
               variant="temporary"
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={this.props.mobileOpen}
-              onClose={this.props.handleDrawerToggle}
+              open={props.mobileOpen}
+              onClose={props.handleDrawerToggle}
               classes={{
                 paper: classes.drawerPaper,
               }}
@@ -169,15 +161,10 @@ class ResponsiveDrawer extends React.Component {
         </nav>
       </div>
     );
-  }
 }
 
 ResponsiveDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
