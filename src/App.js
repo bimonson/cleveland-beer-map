@@ -108,7 +108,9 @@ class App extends Component {
       this.infoWindow.setContent(infoWindowContent);
     }).catch(error => {
       console.log(error);
-      this.infoWindow.setContent(`<h3>${venue.name}</h3>`);
+      this.infoWindow.setContent(`<h3>${venue.name}</h3>
+        <p>Venue details could not be loaded...</p>`
+      );
     });
 
     this.map.setCenter(marker.position);
