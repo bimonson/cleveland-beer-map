@@ -1,44 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cleveland Beer Map
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This is the final project in Udacity's FEND Nano-Degree program.
+It is designed to demonstrate the skills acquired through the program.
+The project uses React along with the following APIs and external dependencies:
 
-### `npm start`
+* [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial)
+* [FourSquare API](https://developers.google.com/maps/documentation/javascript/tutorial)
+* [React Material-UI](https://material-ui.com/)
+* [Create React App](https://github.com/facebook/create-react-app)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Setup
 
-### `npm test`
+* Clone this repo from [https://github.com/bimonson/cleveland-beer-map.git](https://github.com/bimonson/cleveland-beer-map.git)
+* Run `npm install`
+* Run `npm start`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A new browser window should open automatically, displaying the app.
+If not, navigate to [http://localhost:3000](http://localhost:3000) to view the app.
 
-### `npm run build`
+## Use
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Cleveland area breweries and beer related venues are displayed on a Google Map and listed in a side bar
+* Clicking the markers or list items will open an info window displaying the name and photo of the location
+* An input field is available so the user can filter the venues visible on the list and map
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Offline Mode
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The default service worker is used in this app (bootstrapped with create-react-app) and so only works in production build.
 
-### `npm run eject`
+## Resources
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+I'm extremely grateful for the knowledge, guidance and insight of the following people:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* [FEND P7 Walkthrough with Doug Brown](https://www.youtube.com/watch?v=NVAVLCJwAAo&feature=youtu.be)
+* [Coding Session - Google Maps With React JS](https://www.youtube.com/watch?v=5J6fs_BlVC0&feature=youtu.be)
+* [Tutorial Requests: FEND Project 7 - Walk Through & Complete Guide (LONG)](https://www.youtube.com/watch?v=LvQe7xrUh7I&index=6&list=PLKC17wty6rS1XVZbRlWjYU0WVsIoJyO3s&t=0s)
+* [Udacity Project #7 Neighborhood Map walk-through.](https://www.youtube.com/playlist?list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP)
+* [Udacity | Neighborhood Map - Project Explained](https://www.youtube.com/playlist?list=PLgOB68PvvmWCGNn8UMTpcfQEiITzxEEA1)
+* [Using Fetch by Zell Liew](https://css-tricks.com/using-fetch/)
+* [Front-end Problem Solving and Debugging Skills with Cameron Pittman](https://www.youtube.com/watch?v=vftSDWcA6to)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
