@@ -19,27 +19,25 @@ const styles = theme => ({
   },
 });
 
-class FilterInput extends React.Component {
+const FilterInput = (props) => {
 
-  render() {
-    const { classes } = this.props;
+  const { classes } = props;
 
-    return (
-      <form className={classes.container} noValidate autoComplete="off">
+  return (
+    <form className={classes.container} noValidate autoComplete="off">
 
-        <TextField
-          id="outlined-dense"
-          label="Filter Breweries"
-          className={classNames(classes.textField, classes.dense)}
-          margin="dense"
-          variant="outlined"
-          value={this.props.query}
-          onChange={(e) => { this.props.filterVenues(e.target.value) }}
-        />
+      <TextField
+        id="outlined-dense"
+        label="Filter Breweries"
+        className={classNames(classes.textField, classes.dense)}
+        margin="dense"
+        variant="outlined"
+        value={props.query}
+        onChange={(e) => { props.filterVenues(e.target.value) }}
+      />
 
-      </form>
-    );
-  }
+    </form>
+  );
 }
 
 FilterInput.propTypes = {
